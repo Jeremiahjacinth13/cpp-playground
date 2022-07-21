@@ -58,7 +58,12 @@ bool checkHorizontalWin(char board[3][3]) {
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            if (board[i][j] == 'X' && board[i][j] != '*') {
+
+            if (board[i][j] == '*') {
+                return false;
+            }
+
+            if (board[i][j] == 'X') {
                 xCharacterCount++;
             }
         }
@@ -79,7 +84,12 @@ bool checkVerticalWin(char board[3][3]) {
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            if (board[j][i] == 'X' && board[j][i] != '*') {
+            
+            if(board[j][i] == '*') {
+                return false;
+            }
+            
+            if (board[j][i] == 'X') {
                 xCharacterCount++;
             }
         }
@@ -96,10 +106,8 @@ bool checkVerticalWin(char board[3][3]) {
 
 bool checkDiagonalWin (char board[3][3]) {
 
-    int xCharacterCount = 0;
-
-    bool lToRDiagonal = (board[0][0] == board[1][1]) && (board[0][0] == board[2][2]) && (board[0][0] != '*');
-    bool rToLDiagonal = (board[0][2] == board[1][1]) && (board[0][2] == board[2][0]) && (board[0][2] != '*');
+    bool lToRDiagonal = ((board[0][0] == board[1][1]) && (board[0][0] == board[2][2])) && (board[0][0] != '*');
+    bool rToLDiagonal = ((board[0][2] == board[1][1]) && (board[0][2] == board[2][0])) && (board[0][2] != '*');
 
     return lToRDiagonal || rToLDiagonal;
 }
@@ -163,8 +171,14 @@ int main () {
         // increment the playing count;
         playCount++;
 
+        cout << "diagonal" << checkDiagonalWin(board);
+        cout << "Horizontal" << checkHorizontalWin(board);
+        cout << "vertical" << checkVerticalWin(board);
+
+
         // check win and display message
         if (checkHorizontalWin(board) || checkVerticalWin(board) || checkDiagonalWin(board)) {
+            cout << "A WINNER HAS BEEN FOUND" << endl;
             hasWinner = true;
         }
 
