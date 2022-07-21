@@ -77,6 +77,7 @@ bool checkHorizontalWin(char board[3][3]) {
 
     return false;
 }
+//fjkl
 
 bool checkVerticalWin(char board[3][3]) {
 
@@ -88,7 +89,7 @@ bool checkVerticalWin(char board[3][3]) {
             if(board[j][i] == '*') {
                 return false;
             }
-            
+
             if (board[j][i] == 'X') {
                 xCharacterCount++;
             }
