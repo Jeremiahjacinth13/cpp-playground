@@ -77,7 +77,7 @@ bool checkHorizontalWin(char board[3][3]) {
 
     return false;
 }
-//fjkl
+
 
 bool checkVerticalWin(char board[3][3]) {
 
