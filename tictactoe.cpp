@@ -50,26 +50,71 @@ int selectPlayPosition (int max, int min, string message) {
 struct CheckWinReturn {
     bool hasWinner;
     char winner;
-}
+};
 
-CheckWinReturn checkWin (char board[3][3]) {
+bool checkHorizontalWin(char board[3][3]) {
 
-    // horizontal win
+    int xCharacterCount = 0;
+
     for (int i = 0; i < 3; i++) {
-        
+        for (int j = 0; j < 3; j++) {
+            if (board[i][j] == 'X' && board[i][j] != '*') {
+                xCharacterCount++;
+            }
+        }
+
+        if (xCharacterCount == 3 || xCharacterCount == 0) {
+            return true;
+        } else {
+            xCharacterCount = 0;
+        }
     }
+
+    return false;
 }
 
-void handlePlay (char board[3][3]) {
+bool checkVerticalWin(char board[3][3]) {
 
-    row = selectPlayPosition(2, 0, "Enter row position (0 - 2):");
-    col = selectPlayPosition(2, 0, "Enter col position (0 - 2):");
+    int xCharacterCount = 0;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[j][i] == 'X' && board[j][i] != '*') {
+                xCharacterCount++;
+            }
+        }
+
+        if (xCharacterCount == 3 || xCharacterCount == 0) {
+            return true;
+        } else {
+            xCharacterCount = 0;
+        }
+    }
+
+    return false;
+}
+
+bool checkDiagonalWin (char board[3][3]) {
+
+    int xCharacterCount = 0;
+
+    bool lToRDiagonal = (board[0][0] == board[1][1]) && (board[0][0] == board[2][2]) && (board[0][0] != '*');
+    bool rToLDiagonal = (board[0][2] == board[1][1]) && (board[0][2] == board[2][0]) && (board[0][2] != '*');
+
+    return lToRDiagonal || rToLDiagonal;
+}
+
+
+void handlePlay (char board[3][3], char currentPlayingChar) {
+
+    int row = selectPlayPosition(2, 0, "Enter row position (0 - 2):");
+    int col = selectPlayPosition(2, 0, "Enter col position (0 - 2):");
 
     if (board[row][col] != '*') {
         cout << "Please select another position" << endl;
-        handlePlay(board);
+        handlePlay(board, currentPlayingChar);
     } else {
-        cout << "Playing in position (" << row << ", " << ")" << endl;
+        cout << "Playing in position (" << row << ", " << col << ")" << endl;
         
     board[row][col] = currentPlayingChar;
     }
@@ -103,7 +148,7 @@ int main () {
 
         cout << "Player (" << currentPlayingChar << ") is playing now\n" << endl;
 
-        handlePlay(board);
+        handlePlay(board, currentPlayingChar);
 
         printBoard(board);
 
@@ -119,14 +164,18 @@ int main () {
         playCount++;
 
         // check win and display message
-        if (checkWin(board)) {
+        if (checkHorizontalWin(board) || checkVerticalWin(board) || checkDiagonalWin(board)) {
             hasWinner = true;
         }
 
     }
     while ((playCount < maxPlayCount) || !hasWinner);
 
-
+    if (hasWinner) {
+        cout << "WE HAVE OUR WINNER" << endl;
+    } else {
+        cout << "THE GAME IS STALE" << endl;
+    }
     
     
     return 0;
