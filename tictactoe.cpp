@@ -150,32 +150,21 @@ int main () {
     char currentPlayingChar = playerCharacter;
     
     int playCount = 0;
-    const int maxPlayCount = 9;
+    const int MAX_PLAY_COUNT = 9;
 
     do {
         int row, col;
 
         cout << "Player (" << currentPlayingChar << ") is playing now\n" << endl;
 
+        // gets the play positions and updates the board
         handlePlay(board, currentPlayingChar);
 
+        // print the board with the newly played board state
         printBoard(board);
-
-        // switch active player
-        if (currentPlayingChar == playerCharacter) {
-            currentPlayingChar = botCharacter;
-        } else {
-            currentPlayingChar = playerCharacter;
-        }
-
 
         // increment the playing count;
         playCount++;
-
-        cout << "diagonal" << checkDiagonalWin(board);
-        cout << "Horizontal" << checkHorizontalWin(board);
-        cout << "vertical" << checkVerticalWin(board);
-
 
         // check win and display message
         if (checkHorizontalWin(board) || checkVerticalWin(board) || checkDiagonalWin(board)) {
@@ -183,11 +172,20 @@ int main () {
             hasWinner = true;
         }
 
+        if (!hasWinner) {
+
+            // switch active player
+            if (currentPlayingChar == playerCharacter) {
+                currentPlayingChar = botCharacter;
+            } else {
+                currentPlayingChar = playerCharacter;
+            }
+        }
     }
-    while ((playCount < maxPlayCount) || !hasWinner);
+    while (hasWinner ? false : (playCount < MAX_PLAY_COUNT));
 
     if (hasWinner) {
-        cout << "WE HAVE OUR WINNER" << endl;
+        cout << currentPlayingChar << "wins the game"  << endl;
     } else {
         cout << "THE GAME IS STALE" << endl;
     }
