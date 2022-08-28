@@ -1,27 +1,46 @@
 #include <iostream>
+#include <vector>
 
-int linearSearch(int[], int);
-
-int main () 
+template <typename T>
+void printVector(std::vector<T> vector)
 {
-    int array[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    int index = linearSearch(array, 5);
+    std::cout << "[ ";
 
-    if (index != -1) {
-        cout << "Couldn't find element in array" << std::endl;
-    } else {
-        cout << "Found element at index " << index << std::endl;
+    for (int i = 0; i < vector.size() - 1; i++)
+    {
+        std::cout << vector.at(i) << ", ";
     }
+
+    std::cout << vector.at(vector.size() - 1) << " ]" << std::endl;
 }
 
-int linearSearch(int array[], int target) {
-    
-    for (let i = 0; i < len(array); i++) {
-        if (array[i] == target) {
+template <typename T>
+int linearSearch(std::vector<T> vec, T n)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        std::cout << "Currently searching at index " << i << std::endl;
+        std::cout << "\n";
+
+        if (vec.at(i) == n)
+        {
+            std::cout << "Found element at index " << i << std::endl;
             return i;
         }
     }
 
+    std::cout << "Could not find element in list" << std::endl;
     return -1;
+}
+
+int main()
+{
+    std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8};
+
+    int index = linearSearch<int>(numbers, 10);
+
+    std::cout << index << std::endl;
+
+    return 0;
 }
