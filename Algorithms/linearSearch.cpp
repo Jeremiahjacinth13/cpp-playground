@@ -38,7 +38,7 @@ int main()
 {
     std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8};
 
-    int index = linearSearch<int>(numbers, 10);
+    int index = linearSearch<int>(numbers, 5);
 
     std::cout << index << std::endl;
 
